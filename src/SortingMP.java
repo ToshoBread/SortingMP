@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -46,7 +47,10 @@ public class SortingMP {
                     case 1 -> bubbleSort(arrayForSorting);
                     case 2 -> insertionSort(arrayForSorting);
                     case 3 -> selectionSort(arrayForSorting);
-                    case 4 -> mergeSort(arrayForSorting);
+                    case 4 -> {
+                        mergeSort(arrayForSorting);
+                        System.out.printf("Sorted Array: %s", Arrays.toString(arrayForSorting));
+                    }
                     case 5 -> quickSort(arrayForSorting);
                     case 6 -> heapSort(arrayForSorting);
                     case 7 -> randomizeArray(arrayForSorting);
@@ -63,6 +67,12 @@ public class SortingMP {
         }
     }
 
+    /*
+        In Bubble sort algorithm, elements are sorted by pairs,
+        where if the element on the left is greater than the element on the right,
+        swap the positions of both elements;
+        otherwise, ignore and move on to the next pair.
+     */
     static void bubbleSort(int[] array) {
         int limit = array.length - 1;
         int temp;
@@ -80,6 +90,13 @@ public class SortingMP {
         System.out.printf("Sorted Array: %s\n", Arrays.toString(array));
     }
 
+    /*
+        In Insertion sort algorithm, elements are sorted by extracting an element
+        and determining its target position.
+        If the current element is lesser than any of the elements to its left,
+        shift all greater elements to the right by 1
+        then place the current element to its new position.
+     */
     static void insertionSort(int[] array) {
         int limit = array.length;
         System.out.printf("Current Array: %s\n", Arrays.toString(array));
@@ -89,7 +106,6 @@ public class SortingMP {
             int currentIndex = i - 1;
 
             System.out.printf("Pass %d ", i);
-            System.out.printf("%s -> ", Arrays.toString(array));
             while (currentIndex >= 0 && temp < array[currentIndex]) {
                 array[currentIndex + 1] = array[currentIndex];
                 currentIndex--;
@@ -100,6 +116,11 @@ public class SortingMP {
         System.out.printf("Sorted Array: %s\n", Arrays.toString(array));
     }
 
+    /*
+        In Selection sort algorithm, elements are sorted by swapping
+        an unsorted element from the left with the next smallest element
+        from its right.
+     */
     static void selectionSort(int[] array) {
         int limit = array.length;
         int temp;
@@ -107,7 +128,7 @@ public class SortingMP {
         System.out.printf("Current Array: %s\n", Arrays.toString(array));
         for (int i = 0; i < limit; i++) {
             int minIndex = i;
-            System.out.printf("Pass %d\n", i + 1);
+            System.out.printf("Pass %d ", i + 1);
             for (int j = i; j < limit; j++) {
                 if (array[j] < array[minIndex]) {
                     minIndex = j;
@@ -122,7 +143,57 @@ public class SortingMP {
     }
 
     static void mergeSort(int[] array) {
-        System.out.println("Merge Sort Under Development");
+        int limit = array.length;
+        if (limit <= 1) return;
+
+        int mid = limit / 2;
+        int[] leftArray = new int[mid];
+        int[] rightArray = new int[limit - mid];
+
+        int i = 0;
+        int j = 0;
+
+        while (i < limit) {
+            if (i < mid) {
+                leftArray[i] = array[i];
+            } else {
+                rightArray[j] = array[i];
+                j++;
+            }
+            i++;
+        }
+        mergeSort(leftArray);
+        mergeSort(rightArray);
+        merge(leftArray, rightArray, array);
+    }
+
+    //    Helper Method for Merge Sort
+    private static void merge(int[] leftArray, int[] rightArray, int[] array) {
+        int leftSize = array.length / 2;
+        int rightSize = array.length - leftSize;
+        int i = 0, leftIndex = 0, rightIndex = 0;
+
+        while (leftIndex < leftSize && rightIndex < rightSize) {
+            if (leftArray[leftIndex] < rightArray[rightIndex]) {
+                array[i] = leftArray[leftIndex];
+                i++;
+                leftIndex++;
+            } else {
+                array[i] = rightArray[rightIndex];
+                i++;
+                rightIndex++;
+            }
+        }
+        while (leftIndex < leftSize) {
+            array[i] = leftArray[leftIndex];
+            i++;
+            leftIndex++;
+        }
+        while (rightIndex < rightSize) {
+            array[i] = rightArray[rightIndex];
+            i++;
+            rightIndex++;
+        }
     }
 
     static void quickSort(int[] array) {
