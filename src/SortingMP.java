@@ -41,9 +41,14 @@ public class SortingMP {
             try {
                 int choice = userInput.nextInt();
                 System.out.println(divider);
+
                 switch (choice) {
                     case 1 -> bubbleSort(arrayForSorting);
                     case 2 -> insertionSort(arrayForSorting);
+                    case 3 -> selectionSort(arrayForSorting);
+                    case 4 -> mergeSort(arrayForSorting);
+                    case 5 -> quickSort(arrayForSorting);
+                    case 6 -> heapSort(arrayForSorting);
                     case 7 -> randomizeArray(arrayForSorting);
                     case 8 -> {
                         userInput.close();
@@ -51,7 +56,6 @@ public class SortingMP {
                     }
                     default -> System.out.println("Invalid Input");
                 }
-
             } catch (InputMismatchException e) {
                 System.out.println("Invalid Input");
                 userInput.nextLine();
@@ -96,6 +100,39 @@ public class SortingMP {
         System.out.printf("Sorted Array: %s\n", Arrays.toString(array));
     }
 
+    static void selectionSort(int[] array) {
+        int limit = array.length;
+        int temp;
+
+        System.out.printf("Current Array: %s\n", Arrays.toString(array));
+        for (int i = 0; i < limit; i++) {
+            int minIndex = i;
+            System.out.printf("Pass %d\n", i + 1);
+            for (int j = i; j < limit; j++) {
+                if (array[j] < array[minIndex]) {
+                    minIndex = j;
+                }
+            }
+            temp = array[i];
+            array[i] = array[minIndex];
+            array[minIndex] = temp;
+            System.out.println(Arrays.toString(array));
+        }
+        System.out.printf("Sorted Array: %s\n", Arrays.toString(array));
+    }
+
+    static void mergeSort(int[] array) {
+        System.out.println("Merge Sort Under Development");
+    }
+
+    static void quickSort(int[] array) {
+        System.out.println("Quick Sort Under Development");
+    }
+
+    static void heapSort(int[] array) {
+        System.out.println("Heap Sort Under Development");
+    }
+
     static void randomizeArray(int[] array) {
         int limit = array.length - 1;
         Random random = new Random();
@@ -106,7 +143,6 @@ public class SortingMP {
             int temp = array[i];
             array[i] = array[upperBound];
             array[upperBound] = temp;
-            System.out.printf("%s\n", Arrays.toString(array));
         }
         System.out.printf("Randomized Array: %s\n", Arrays.toString(array));
     }
