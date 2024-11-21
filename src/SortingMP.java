@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -26,6 +25,7 @@ public class SortingMP {
             userInput.nextLine();
         }
 
+//        While loop ensures that the program does not terminate until chosen so by the user
         while (true) {
             System.out.println(divider);
             System.out.println("Array Sorting");
@@ -67,20 +67,20 @@ public class SortingMP {
         }
     }
 
-    /*
-        In Bubble sort algorithm, elements are sorted by pairs,
-        where if the element on the left is greater than the element on the right,
-        swap the positions of both elements;
-        otherwise, ignore and move on to the next pair.
-     */
+//  Bubble Sort Method
     static void bubbleSort(int[] array) {
         int limit = array.length - 1;
         int temp;
+        System.out.printf("Current Array: %s\n", Arrays.toString(array));
+
+//        Outer loop to manage the number of iterations
         for (int i = 0; i < limit; i++) {
             System.out.printf("Pass %d\n", i + 1);
+//            Inner loop to manage the swapping
             for (int j = 0; j < limit; j++) {
                 System.out.println(Arrays.toString(array));
-                if (array[j] > array[j + 1]) {
+//                Check if the current element is greater than the next
+                if (array[j] > array[j + 1]) { // if yes, swap them
                     temp = array[j + 1];
                     array[j + 1] = array[j];
                     array[j] = temp;
@@ -90,50 +90,46 @@ public class SortingMP {
         System.out.printf("Sorted Array: %s\n", Arrays.toString(array));
     }
 
-    /*
-        In Insertion sort algorithm, elements are sorted by extracting an element
-        and determining its target position.
-        If the current element is lesser than any of the elements to its left,
-        shift all greater elements to the right by 1
-        then place the current element to its new position.
-     */
+//    Insertion Sort Method
     static void insertionSort(int[] array) {
         int limit = array.length;
         System.out.printf("Current Array: %s\n", Arrays.toString(array));
 
+//        Outer loop to manage the number of iterations
         for (int i = 1; i < limit; i++) {
-            int temp = array[i];
+            int temp = array[i]; // initialize current element in a temporary variable
             int currentIndex = i - 1;
 
             System.out.printf("Pass %d ", i);
-            while (currentIndex >= 0 && temp < array[currentIndex]) {
+//            Check if the current element is less than the previous and if the index is within bounds
+            while (currentIndex >= 0 && temp < array[currentIndex]) { // If yes, shift elements to the right
                 array[currentIndex + 1] = array[currentIndex];
                 currentIndex--;
             }
-            array[currentIndex + 1] = temp;
+            array[currentIndex + 1] = temp; // After shifting, insert the saved element
             System.out.println(Arrays.toString(array));
         }
         System.out.printf("Sorted Array: %s\n", Arrays.toString(array));
     }
 
-    /*
-        In Selection sort algorithm, elements are sorted by swapping
-        an unsorted element from the left with the next smallest element
-        from its right.
-     */
     static void selectionSort(int[] array) {
         int limit = array.length;
         int temp;
 
         System.out.printf("Current Array: %s\n", Arrays.toString(array));
+//        Outer loop to manage the number of iterations
         for (int i = 0; i < limit; i++) {
-            int minIndex = i;
+            int minIndex = i; // Initialize the minimum index
             System.out.printf("Pass %d ", i + 1);
+//            Inner loop to handle the search for next smallest element
             for (int j = i; j < limit; j++) {
-                if (array[j] < array[minIndex]) {
+//                Check if the current element is lesser than the current minimum element
+                if (array[j] < array[minIndex]) { // if yes, the current element is the new minimum
                     minIndex = j;
                 }
             }
+
+//
             temp = array[i];
             array[i] = array[minIndex];
             array[minIndex] = temp;
