@@ -23,7 +23,6 @@ class BubbleSort {
         System.out.printf("Initial scores: %s\n", Arrays.toString(array));
 //        Outer loop to manage the number of iterations to sort the array
         for (int i = 0; i < limit; i++) {
-
             numberOfSwaps = 0; // Reset the swap counter after each pass
             System.out.printf("Pass %d: ", i + 1);
 //            Inner loop to compare adjacent elements and swap them if needed
