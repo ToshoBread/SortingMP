@@ -4,11 +4,11 @@ class BubbleSort {
     public static void main(String[] args) {
 //        Test Case
         bubble_sort(new int[]{75, 83, 90, 65, 88, 65, 65});
-        bubble_sort(new int[]{0});
     }
 
     static void bubble_sort(int[] array) {
 //        This method sorts an array in descending order.
+//        Returns immediately if the there is no more than 1 element
 //        Prints the array's state after each pass, along with the number of swaps performed.
 //        Stops early if the array has been sorted in a pass.
 
