@@ -178,7 +178,7 @@ public class SortingMP {
         merge(leftArray, rightArray, array);
     }
 
-    //    Helper Method for Merge Sort
+    //    Helper Method for mergeSort()
     private static void merge(int[] leftArray, int[] rightArray, int[] array) {
         int leftSize = array.length / 2;
         int rightSize = array.length - leftSize;
@@ -218,16 +218,25 @@ public class SortingMP {
     static void quickSort(int[] array, int start, int end) {
         if (end <= start) return; //Base case
 
+        System.out.printf("Sorting Array: %s\n", Arrays.toString(Arrays.copyOfRange(array, start, end + 1)));
+
+//        partition() helper method splits the array and reorders elements based around the pivot
         int pivot = partition(array, start, end);
+
+        System.out.printf("Pivot(%d) placed at index %d: %s\n", array[pivot], pivot, Arrays.toString(array));
+
+//        Recursively sort the subarrays before and after the pivot
         quickSort(array, start, pivot - 1);
         quickSort(array, pivot + 1, end);
     }
 
+    //    Helper Method for quickSort()
     private static int partition(int[] array, int start, int end) {
         int pivot = array[end];
         int i = start - 1;
         int temp;
 
+//        Loop through an array and partition it around the pivot
         for (int j = start; j <= end - 1; j++) {
             if (array[j] < pivot) {
                 i++;
@@ -236,15 +245,65 @@ public class SortingMP {
                 array[j] = temp;
             }
         }
+//        Place the pivot in its correct position
         i++;
         temp = array[i];
         array[i] = array[end];
         array[end] = temp;
-        return i;
+
+        return i; // return the index of the pivot
     }
 
     static void heapSort(int[] array) {
-        System.out.println("Heap Sort Under Development");
+        int arrayLength = array.length;
+        int temp;
+
+        System.out.printf("Current Array: %s\n", Arrays.toString(array));
+
+//        Loop that builds the max heap
+        System.out.println("Building max heap:");
+        for (int i = arrayLength / 2 - 1; i >= 0; i--) {
+            heapify(array, arrayLength, i);
+        }
+        System.out.printf("Heap after heapify: %s\n", Arrays.toString(array));
+
+//        Loop extracts from the heap one by one, sorting the array in ascending order
+        System.out.println("Sorting Array:");
+        for (int i = arrayLength - 1; i > 0; i--) {
+            temp = array[0];
+            array[0] = array[i];
+            array[i] = temp;
+
+            System.out.printf("After swapping root with index %d: %s\n", i, Arrays.toString(array));
+
+//            heapify() helper method maintains the max heap property
+            heapify(array, i, 0);
+            System.out.printf("Heap after heapify: %s\n", Arrays.toString(array));
+        }
+        System.out.printf("Sorted Array: %s\n", Arrays.toString(array));
+    }
+
+    //    Helper Method for heapSort()
+    private static void heapify(int[] array, int size, int root) {
+        int largest = root;
+        int temp;
+        while (true) {
+            int left = 2 * root + 1;
+            int right = 2 * root + 2;
+
+//            Compare if either the left or right children is larger than the root
+            largest = left < size && array[left] > array[largest] ? left : largest;
+            largest = right < size && array[right] > array[largest] ? right : largest;
+
+            if (largest == root) break;
+
+//            Swap the root with the largest child
+            temp = array[root];
+            array[root] = array[largest];
+            array[largest] = temp;
+
+            root = largest;
+        }
     }
 
     static void randomizeArray(int[] array) {
@@ -252,7 +311,9 @@ public class SortingMP {
         Random random = new Random();
 
         System.out.printf("Current Array: %s\n", Arrays.toString(array));
+//        Iterate over an array starting from the last element
         for (int i = limit; i > 0; i--) {
+//            Swap the position of the current element and a random element to its left
             int upperBound = random.nextInt(i + 1);
             int temp = array[i];
             array[i] = array[upperBound];
